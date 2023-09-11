@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import toDoList.views
+from django.views.decorators.cache import cache_page
+from django.conf.urls.static import  static
 
+from toDoList_backend import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('test_cache/',cache_page(60)(toDoList.test_cache)),
+    path('test_upload/',toDoList.views.test_upload)
 ]
+urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
